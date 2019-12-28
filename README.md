@@ -5,6 +5,6 @@ Note: This package doesn't include event-listeners (yet), so it needs external l
 My example used Pynput for keyboard event-listeners.
 
 Screenshots:
-![menu](https://github.com/avancayetano/pyclig/tree/master/screenshots/menu.png)
+![menu](screenshots/menu.png?raw=true "menu")
 
-![gameplay](https://github.com/avancayetano/pyclig/tree/master/screenshots/gameplay.png)
+![gameplay](screenshots/gameplay.png?raw=true "gameplay")
