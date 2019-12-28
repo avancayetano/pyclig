@@ -14,11 +14,11 @@ class GameWindow(pyclig.window.Window):
 		self.buttons = [button.Button(window=self, text=txt, x=self.width // 2, y=20 + idx, anchor="center") 
 			for idx, txt in enumerate(buttons_text)]
 		self.buttons[0].active = True
-		self.player = player_obj.Player(window=self, x=self.width // 2, y=self.height // 2, width=5, height=3, dx=0, dy=0, char="#", speed=1)
+		self.player = player_obj.Player(window=self, x=self.width // 2, y=self.height // 2, width=8, height=4, dx=0, dy=0, char="@", speed=1)
 		self.score = pyclig.label.Label(window=self, text="SCORE: {}".format(self.player.score), x=0, y=self.height - 1)
 		self.obstacles_number = 8
 		coordinates = self.generate_obs_pos(self.obstacles_number)
-		self.obstacles = [obstacle_obj.Obstacle(window=self, x=coordinates[i][0], y=coordinates[i][1], width=4, height=2, char="0") 
+		self.obstacles = [obstacle_obj.Obstacle(window=self, x=coordinates[i][0], y=coordinates[i][1], width=4, height=2, char="#") 
 			for i in range(self.obstacles_number)]
 
 		self.listener = keyboard.Listener(on_press=self.player.on_press, on_release=self.player.on_release)
