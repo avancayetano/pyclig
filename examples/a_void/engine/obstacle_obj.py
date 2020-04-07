@@ -18,10 +18,21 @@ class Obstacle(pyclig.sprite.Sprite):
 		self.dy = (1 - self.dx ** 2) ** (1 / 2)
 		self.speed = self.init_speed
 
+	# overwritten render and unrender method of the Sprite class
+	def render(self):
+		if self.window.player.state == "alive":
+			for i in range(self.height):
+				self.window.screen[int(self.y) + i][int(self.x): int(self.x) + self.width] = [self.char for j in range(self.width)]
+
+	def unrender(self):
+		if self.window.player.state == "alive":
+			for i in range(self.height):
+				self.window.screen[int(self.y) + i][int(self.x): int(self.x) + self.width] = [self.window.char for j in range(self.width)]
+
 	def update(self):
 		self.x += self.dx * self.speed
 		self.y += self.dy * self.speed
-		self.speed = (self.window.player.score // 200) * 0.25 + 1
+		self.speed = (self.window.player.score // 200) * 0.25 + self.init_speed
 		self.check_bounds()
 
 

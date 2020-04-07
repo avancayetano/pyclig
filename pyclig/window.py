@@ -29,6 +29,9 @@ class Window:
 			self.draw()
 			self.clock = time.time()
 
+	def exit(self):
+		os.system("kill -STOP {}".format(os.getpid()))
+
 	def draw(self):
 		for i in range(self.height):
 			print("".join(self.screen[i]))

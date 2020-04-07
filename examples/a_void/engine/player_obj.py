@@ -7,7 +7,6 @@ class Player(pyclig.sprite.Sprite):
 		self.state = "dead"
 		self.cursor = 0
 
-
 	def on_press(self, key):
 		try:
 			key = key.char
@@ -35,7 +34,7 @@ class Player(pyclig.sprite.Sprite):
 				self.window.buttons[self.cursor].toggle_help()
 
 			if key == "space" and "QUIT" in self.window.buttons[self.cursor].text:
-				os.system("kill -STOP {}".format(os.getpid()))
+				self.window.exit()
 
 			if self.cursor < 0:
 				self.cursor = len(self.window.buttons) - 1
@@ -63,7 +62,8 @@ class Player(pyclig.sprite.Sprite):
 			except:
 				key = key.name
 			if key == "space":
-				self.speed = 1
+				self.window.refresh()
+				self.speed = self.init_speed
 			if key == "w" or key == "s":
 				self.dy = 0
 			if key == "a" or key == "d":

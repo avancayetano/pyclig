@@ -1,5 +1,8 @@
 import sys, os, time
-sys.path.append(sys.path[0] + "/../..") # now this is ugly as shit, i know
+
+# warning: hard-coded shit below: 
+sys.path.append(sys.path[0] + "/../..") # cause main.py is two directories away from the pyclig package
+
 
 import pyclig
 from engine import player_obj, obstacle_obj, button
@@ -8,7 +11,7 @@ from pynput import keyboard
 class GameWindow(pyclig.window.Window):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-
+		sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=kwargs["height"], cols=kwargs["width"]))
 		self.title = pyclig.label.Label(window=self, text="< == A VOID == >", x=self.width // 2, y=15, anchor="center")
 		buttons_text = ["PLAY", "HELP", "QUIT"]
 		self.buttons = [button.Button(window=self, text=txt, x=self.width // 2, y=20 + idx, anchor="center") 
@@ -35,6 +38,7 @@ class GameWindow(pyclig.window.Window):
 				coordinates.append([x + x_interval * (i - number // 2), self.height - 4])
 		return coordinates
 
+	# the pyclig.window.Window class has an update method which executes the parametes' update methods
 	def run(self):
 		while True:			
 			if self.player.state == "dead":
