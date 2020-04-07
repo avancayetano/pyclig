@@ -12,8 +12,6 @@ class GameWindow(pyclig.window.Window):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=kwargs["height"], cols=kwargs["width"])) # changes terminal dimensions
-
 		self.title = pyclig.label.Label(window=self, text="< == A VOID == >", x=self.width // 2, y=15, anchor="center")
 		buttons_text = ["PLAY", "HELP", "QUIT"]
 		self.buttons = [button.Button(window=self, text=txt, x=self.width // 2, y=20 + idx, anchor="center") 

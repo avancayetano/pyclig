@@ -1,4 +1,4 @@
-import os, time
+import os, time, sys
 from . import label, sprite
 
 class Window:
@@ -9,6 +9,7 @@ class Window:
 
 		self.fps = fps
 		self.clock = 0
+		sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=height, cols=width)) # changes terminal dimensions
 		self.refresh()
 
 	def refresh(self):
