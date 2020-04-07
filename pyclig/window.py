@@ -17,17 +17,11 @@ class Window:
 			if i == 0 or i == self.height - 1:
 				self.screen.append(["=" for j in range(self.width)])
 			else:
-				self.screen.append(["|" if j == 0 or j == self.width - 1 else self.char for j in range(self.width)])		
+				self.screen.append(["|" if j == 0 or j == self.width - 1 else self.char for j in range(self.width)])
 
-	def update(self, *objects):
-		if time.time() - self.clock > 1 / self.fps:
-			os.system("clear")
-			for obj in objects:
-				obj.unrender()
-				obj.update()
-				obj.render()
-			self.draw()
-			self.clock = time.time()
+	# needs to be overwritten
+	def update(self):
+		pass		
 
 	def exit(self):
 		os.system("kill -STOP {}".format(os.getpid()))

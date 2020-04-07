@@ -11,7 +11,9 @@ from pynput import keyboard
 class GameWindow(pyclig.window.Window):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=kwargs["height"], cols=kwargs["width"]))
+
+		sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=kwargs["height"], cols=kwargs["width"])) # changes terminal dimensions
+
 		self.title = pyclig.label.Label(window=self, text="< == A VOID == >", x=self.width // 2, y=15, anchor="center")
 		buttons_text = ["PLAY", "HELP", "QUIT"]
 		self.buttons = [button.Button(window=self, text=txt, x=self.width // 2, y=20 + idx, anchor="center") 
@@ -37,6 +39,16 @@ class GameWindow(pyclig.window.Window):
 			else:
 				coordinates.append([x + x_interval * (i - number // 2), self.height - 4])
 		return coordinates
+
+	def update(self, *objects):
+		if time.time() - self.clock > 1 / self.fps:
+			os.system("clear")
+			for obj in objects:
+				obj.unrender()
+				obj.update()
+				obj.render()
+			self.draw()
+			self.clock = time.time()
 
 	# the pyclig.window.Window class has an update method which executes the parametes' update methods
 	def run(self):
