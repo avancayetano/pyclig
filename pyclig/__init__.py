@@ -1,2 +1,2 @@
-from . import sprite, window, label
+from . import sprite, window, label, util
 

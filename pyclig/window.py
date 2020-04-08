@@ -1,5 +1,5 @@
 import os, time, sys
-from . import label, sprite
+from . import label, shapes
 
 class Window:
 	def __init__(self, width=80, height=22, char=" ", fps=30):
@@ -22,10 +22,14 @@ class Window:
 
 	# needs to be overwritten
 	def update(self):
+		pass
+
+	def run(self):
 		pass		
 
 	def exit(self):
 		os.system("kill -STOP {}".format(os.getpid()))
+
 
 	def draw(self):
 		for i in range(self.height):

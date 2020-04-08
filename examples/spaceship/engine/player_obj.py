@@ -1,6 +1,5 @@
-import pyclig, os
-
-class Player(pyclig.shapes.Rect):
+import pyclig
+class Player(pyclig.sprite.Sprite):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.score = 0
@@ -22,11 +21,11 @@ class Player(pyclig.shapes.Rect):
 		except:
 			key = key.name
 		if self.state == "dead":
-			if key == "w":
+			if key == "up":
 				self.window.buttons[self.cursor].active = False
 				self.window.buttons[self.cursor].update()
 				self.cursor -= 1
-			if key == "s":
+			if key == "down":
 				self.window.buttons[self.cursor].active = False
 				self.window.buttons[self.cursor].update()
 				self.cursor += 1
@@ -53,15 +52,15 @@ class Player(pyclig.shapes.Rect):
 			self.window.buttons[self.cursor].update()
 
 		else:
-			if key == "space":
+			if key == "shift":
 				self.speed = (6, 3)
-			if key == "w":
+			if key == "up":
 				self.direction = (self.direction[0], -1)
-			if key == "s":
+			if key == "down":
 				self.direction = (self.direction[0], 1)
-			if key == "d":
+			if key == "right":
 				self.direction = (1, self.direction[1])
-			if key == "a":
+			if key == "left":
 				self.direction = (-1, self.direction[1])
 
 	def on_release(self, key):
@@ -70,12 +69,12 @@ class Player(pyclig.shapes.Rect):
 				key = key.char
 			except:
 				key = key.name
-			if key == "space":
+			if key == "shift":
 				self.speed = self.init_speed
 
-			if key == "w" or key == "s":
+			if key == "up" or key == "down":
 				self.direction = (self.direction[0], 0)
-			if key == "a" or key == "d":
+			if key == "left" or key == "right":
 				self.direction = (0, self.direction[1])
 
 	def update(self):

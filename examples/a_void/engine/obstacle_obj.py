@@ -1,62 +1,51 @@
 import pyclig, random
 
-class Obstacle(pyclig.sprite.Sprite):
+class Obstacle(pyclig.shapes.Rect):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.dx = random.random() * random.choice([-1, 1])
-		if self.dx == 0:
-			self.dx = 0.5
-		self.dy = (1 - self.dx ** 2) ** (1 / 2)
+		direction_x = random.random() * random.choice([-1, 1])
+		if direction_x == 0:
+			direction_x = 0.5
+		direction_y = (1 - direction_x ** 2) ** (1 / 2)
+		self.direction = (direction_x, direction_y)
+		self.init_speed = self.speed
+		self.init_pos = (self.x, self.y)
 
 
 	def reset(self):
-		self.x = self.init_xy[0]
-		self.y = self.init_xy[1]
-		self.dx = random.random() * random.choice([-1, 1])
-		if self.dx == 0:
-			self.dx = 0.5
-		self.dy = (1 - self.dx ** 2) ** (1 / 2)
+		self.x = self.init_pos[0]
+		self.y = self.init_pos[1]
+		direction_x = random.random() * random.choice([-1, 1])
+		if direction_x == 0:
+			direction_x = 0.5
+		direction_y = (1 - direction_x ** 2) ** (1 / 2)
+		self.direction = (direction_x, direction_y)
 		self.speed = self.init_speed
 
-	# overwritten render and unrender method of the Sprite class
-	def render(self):
-		if self.window.player.state == "alive":
-			for i in range(self.height):
-				self.window.screen[int(self.y) + i][int(self.x): int(self.x) + self.width] = [self.char for j in range(self.width)]
-
-	def unrender(self):
-		if self.window.player.state == "alive":
-			for i in range(self.height):
-				self.window.screen[int(self.y) + i][int(self.x): int(self.x) + self.width] = [self.window.char for j in range(self.width)]
 
 	def update(self):
-		self.x += self.dx * self.speed
-		self.y += self.dy * self.speed
-		self.speed = (self.window.player.score // 200) * 0.25 + self.init_speed
+		self.x += self.direction[0] * self.speed[0]
+		self.y += self.direction[1] * self.speed[1]
+		self.speed = ((self.window.player.score // 200) * 0.25 + self.init_speed[0], (self.window.player.score // 200) * 0.25 + self.init_speed[1])
 		self.check_bounds()
 
 
 	def change_direction(self, other):
-		temp_dx = self.dx
-		temp_dy = self.dy
-		self.dx = other.dx
-		self.dy = other.dy
-		other.dx = temp_dx
-		other.dy = temp_dy
+		self.direction, other.direction = other.direction, self.direction
 
 	def check_bounds(self):
 		if self.x < 1:
 			self.x = 1
-			self.dx = -self.dx
+			self.direction = (-self.direction[0], self.direction[1])
 		if self.x + self.width > self.window.width - 1:
 			self.x = self.window.width - 1 - self.width
-			self.dx = -self.dx
+			self.direction = (-self.direction[0], self.direction[1])
 		if self.y < 1:
 			self.y = 1
-			self.dy = -self.dy
+			self.direction = (self.direction[0], -self.direction[1])
 		if self.y + self.height > self.window.height - 1:
 			self.y = self.window.height - 1 - self.height
-			self.dy = -self.dy
+			self.direction = (self.direction[0], -self.direction[1])
 
 		collided = self.check_group_collision(self.window.obstacles)
 		if collided:
