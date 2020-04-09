@@ -8,8 +8,10 @@ class Label:
 		self.y = y
 		self.anchor = anchor
 
-	def update(self):
-		pass
+	def update(self, new_text):
+		self.unrender()
+		if new_text:
+			self.text = new_text
 
 	def unrender(self):
 		if self.anchor == "center":

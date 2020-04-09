@@ -1,3 +1,4 @@
+import curses
 class Image:
 	def __init__(self, value, source, width, height):
 		self.value = value
@@ -5,6 +6,16 @@ class Image:
 		self.width = width
 		self.height = height
 
+colors = {
+	"black": curses.COLOR_BLACK,
+	"blue": curses.COLOR_BLUE,
+	"cyan": curses.COLOR_CYAN,
+	"green": curses.COLOR_GREEN,
+	"magenta": curses.COLOR_MAGENTA,
+	"red": curses.COLOR_RED,
+	"white": curses.COLOR_WHITE,
+	"yellow": curses.COLOR_YELLOW,
+}
 
 def load_image(source):
 	val = []

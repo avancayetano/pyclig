@@ -12,6 +12,7 @@ class Rect:
 
 
 	def update(self):
+		self.unrender()
 		self.x += self.direction[0] * self.speed[0]
 		self.y += self.direction[1] * self.speed[1]
 		self.check_bounds()
@@ -22,13 +23,13 @@ class Rect:
 	def unrender(self):
 		for y in range(self.height):
 			for x in range(self.width):
-				if 1 <= self.x + x <= self.window.width - 1 and 1 <= self.y + y <= self.window.height - 1:
+				if 0 <= int(self.x) + x <= self.window.width - 1 and 0 <= int(self.y) + y <= self.window.height - 1:
 					self.window.screen[int(self.y) + y][int(self.x) + x] = self.window.char
 
 	def render(self):
 		for y in range(self.height):
 			for x in range(self.width):
-				if 1 <= self.x + x <= self.window.width - 1 and 1 <= self.y + y <= self.window.height - 1:
+				if 0 <= int(self.x) + x <= self.window.width -1 and 0 <= int(self.y) + y <= self.window.height - 1:
 					self.window.screen[int(self.y) + y][int(self.x) + x] = self.char
 
 	def check_group_collision(self, others):
